@@ -58,12 +58,13 @@ def _read_key_unix(timeout: float) -> str | None:
 def _read_key_windows(timeout: float) -> str | None:
     import msvcrt
 
+    windows_keyboard = cast(Any, msvcrt)
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
-        if msvcrt.kbhit():
-            key = msvcrt.getwch()
+        if windows_keyboard.kbhit():
+            key = cast(str, windows_keyboard.getwch())
             if key in ("\x00", "\xe0"):
-                arrow = msvcrt.getwch()
+                arrow = cast(str, windows_keyboard.getwch())
                 return {"H": "up", "P": "down", "M": "right", "K": "left"}.get(arrow)
             return key
         time.sleep(0.005)
