@@ -3,7 +3,7 @@ from __future__ import annotations
 import random
 from typing import Literal
 
-#Координаты и направления
+# Координаты и направления
 Position = tuple[int, int]
 Direction = Literal["up", "down", "left", "right"]
 
@@ -19,9 +19,8 @@ _VECTOR_DIRECTIONS: dict[Position, Direction] = {
 
 
 class Snake:
-
     def __init__(self, start_pos: Position, direction: Direction = "right") -> None:
-         # Проверяем, что змейке задали одно из разрешённых направлений
+        # Проверяем, что змейке задали одно из разрешённых направлений
         if direction not in _DIRECTION_VECTORS:
             raise ValueError("Direction must be up, down, left, or right.")
         self.direction = direction
@@ -31,7 +30,7 @@ class Snake:
         self._growth_pending = 0
 
     def head(self) -> Position:
-        return self.body[0] #Голова всегда в начале
+        return self.body[0]  # Голова всегда в начале
 
     def move(self, dx: int, dy: int) -> None:
         if abs(dx) + abs(dy) != 1:
@@ -45,14 +44,13 @@ class Snake:
             self.body.pop()
 
     def grow(self) -> None:
-        self._growth_pending += 1 #Иначе при след. ходе хвост удалится
+        self._growth_pending += 1  # Иначе при след. ходе хвост удалится
 
     def collides_self(self) -> bool:
         return len(self.body) != len(set(self.body))
 
 
 class Game:
-
     def __init__(self, w: int = 20, h: int = 15, speed: float = 8.0) -> None:
         if w < 7 or h < 5:
             raise ValueError("Board must be at least 7 cells wide and 5 cells high.")
@@ -75,19 +73,19 @@ class Game:
         return self._is_over
 
     @property
-    def level(self) -> int: 
-        return self.score // 50 + 1 #каждые 50 очков новый уровень
+    def level(self) -> int:
+        return self.score // 50 + 1  # каждые 50 очков новый уровень
 
     @property
     def tick(self) -> float:
-        return max(0.05, 1.0 / self.base_speed - (self.level - 1) * 0.02) #ускоряет игру
+        return max(0.05, 1.0 / self.base_speed - (self.level - 1) * 0.02)  # ускоряет игру
 
     def spawn_food(self) -> Position | None:
         occupied = set(self.snake.body)
         free_cells = [
             (x, y) for y in range(self.height) for x in range(self.width) if (x, y) not in occupied
         ]
-        if not free_cells: #ищем свободную клетку для еды
+        if not free_cells:  # ищем свободную клетку для еды
             self.food = None
             self._is_over = True
             self.won = True
@@ -95,7 +93,7 @@ class Game:
         self.food = random.choice(free_cells)
         return self.food
 
-    #проверка на столкновения и обработка еды
+    # проверка на столкновения и обработка еды
     def step(self, direction: Direction | None = None) -> None:
         if self._is_over or self.paused:
             return
@@ -120,12 +118,12 @@ class Game:
             self.score += 10
             self.spawn_food()
 
-    #пауза
+    # пауза
     def toggle_pause(self) -> None:
         if not self._is_over:
             self.paused = not self.paused
-    
-    #запрет разворота на 180
+
+    # запрет разворота на 180
     def change_direction(self, direction: Direction) -> None:
         if direction not in _DIRECTION_VECTORS:
             raise ValueError("Direction must be up, down, left, or right.")

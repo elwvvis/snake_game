@@ -1,7 +1,7 @@
 from snake_game.logic import Game, Snake
 
 
-#перемещение головы на одну клетку
+# перемещение головы на одну клетку
 def test_snake_moves_head_by_one_cell() -> None:
     snake = Snake((3, 4))
 
@@ -10,7 +10,7 @@ def test_snake_moves_head_by_one_cell() -> None:
     assert snake.head() == (4, 4)
 
 
-#проверка на рост тела 
+# проверка на рост тела
 def test_snake_grows_after_eating() -> None:
     snake = Snake((3, 4))
     old_length = len(snake.body)
@@ -21,7 +21,7 @@ def test_snake_grows_after_eating() -> None:
     assert len(snake.body) == old_length + 1
 
 
-#проверка на самостолкновение
+# проверка на самостолкновение
 def test_self_collision_detects_repeated_cell() -> None:
     snake = Snake((3, 4))
     snake.body = [(3, 4), (3, 5), (4, 5), (4, 4), (3, 4)]
@@ -29,7 +29,7 @@ def test_self_collision_detects_repeated_cell() -> None:
     assert snake.collides_self()
 
 
-#проверка на конец игры при столкновении со стеной
+# проверка на конец игры при столкновении со стеной
 def test_wall_collision_ends_game() -> None:
     game = Game(w=7, h=5)
     game.snake.body = [(6, 2), (5, 2), (4, 2)]
@@ -40,7 +40,7 @@ def test_wall_collision_ends_game() -> None:
     assert game.is_over
 
 
-#размещение еды несколько раз и проверка, что она в свободном поле
+# размещение еды несколько раз и проверка, что она в свободном поле
 def test_food_spawns_in_an_unoccupied_cell() -> None:
     game = Game(w=10, h=8)
 
@@ -53,7 +53,7 @@ def test_food_spawns_in_an_unoccupied_cell() -> None:
         assert 0 <= y < game.height
 
 
-#проверка на еду, рост змейки и рост очков
+# проверка на еду, рост змейки и рост очков
 def test_eating_food_adds_score_length_and_level() -> None:
     game = Game(w=10, h=8)
     game.snake.body = [(4, 4), (3, 4), (2, 4)]
@@ -67,7 +67,7 @@ def test_eating_food_adds_score_length_and_level() -> None:
     assert game.level == 1
 
 
-#проверка на переход на след уровень и ускорение
+# проверка на переход на след уровень и ускорение
 def test_level_increase_makes_game_faster() -> None:
     game = Game(w=10, h=8)
     game.score = 40
@@ -81,7 +81,7 @@ def test_level_increase_makes_game_faster() -> None:
     assert game.tick < old_tick
 
 
-#проверка на паузу
+# проверка на паузу
 def test_pause_prevents_game_steps() -> None:
     game = Game(w=10, h=8)
     old_body = game.snake.body.copy()

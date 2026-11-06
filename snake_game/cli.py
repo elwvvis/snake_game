@@ -7,7 +7,7 @@ from snake_game.logic import Game
 from snake_game.terminal import play
 
 
-#параметры
+# параметры
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Play Snake in your terminal")
     parser.add_argument("--width", type=int, default=20, help="board width (minimum 7)")
@@ -15,7 +15,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--speed", type=float, default=8.0, help="initial moves per second")
     return parser
 
-#main получает параметры, запускает игру, повторяет при нажатии y
+
+# main получает параметры, запускает игру, повторяет при нажатии y
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
