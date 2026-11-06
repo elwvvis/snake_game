@@ -1,5 +1,6 @@
 from snake_game.logic import Game, Snake
 
+
 #перемещение головы на одну клетку
 def test_snake_moves_head_by_one_cell() -> None:
     snake = Snake((3, 4))

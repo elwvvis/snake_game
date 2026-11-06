@@ -21,7 +21,8 @@ _VECTOR_DIRECTIONS: dict[Position, Direction] = {
 class Snake:
 
     def __init__(self, start_pos: Position, direction: Direction = "right") -> None:
-        if direction not in _DIRECTION_VECTORS: # Проверяем, что змейке задали одно из разрешённых направлений
+         # Проверяем, что змейке задали одно из разрешённых направлений
+        if direction not in _DIRECTION_VECTORS:
             raise ValueError("Direction must be up, down, left, or right.")
         self.direction = direction
         dx, dy = _DIRECTION_VECTORS[direction]
